@@ -1,0 +1,143 @@
+-- (a) Who are the customers that live in Lisbon?
+ customer_name
+---------------
+ Cook
+ Parker
+ Adams
+(3 rows)
+
+-- (b) Which accounts have a balance greater than 500€?
+ account_number 
+----------------
+ A-215
+ A-102
+ A-305
+ A-201
+ A-222
+ A-217
+ A-333
+ A-444
+(8 rows)
+
+-- (c) What would be the new account balances at Downtown branch if it
+-- offered a 27.7% bonus on the current balance of the customers?
+ new_balance  
+--------------
+  638.5000000
+ 1085.4500000
+(2 rows)
+
+-- (d) Who are the customers whose accounts have a balance 
+-- greater than than 500€?
+ customer_name 
+---------------
+ Brown
+ Cook
+ Flores
+ Johnson
+ Iacocca
+ Evans
+ Oliver
+(7 rows)
+
+-- (e) In which cities do the customers with loans between 1000€ and
+-- 2000€ live?
+ customer_city 
+---------------
+ Oporto
+ Coimbra
+ Faro
+(3 rows)
+
+-- (f) What is the balance of all the accounts of the customer that
+-- has loan L-15?
+ balance  
+----------
+ 700.0000
+ 500.0000
+(2 rows)
+
+-- (g) On which branches do customers whose names begin with J and end
+-- in n have their accounts?
+ branch_name 
+-------------
+ Downtown
+ Uptown
+(2 rows)
+
+-- (h) What are the loan amounts of the customers who live in cities
+-- whose names are exactly 6 characters long?
+  amount   
+-----------
+ 2000.0000
+ 3000.0000
+ 5000.0000
+ 6000.0000
+ 8000.0000
+ 9000.0000
+(6 rows)
+
+-- (i) What are the loan amounts of all clients living in a city
+-- whose name has at least one space in the middle (not at the
+-- beginning nor at the end)?
+  amount   
+-----------
+ 4000.0000
+(1 row)
+
+-- (j) What are the assets of the agencies where 'Johnson' has an
+-- account?
+ branch_name |    assets    
+-------------+--------------
+ Downtown    | 1900000.0000
+ Uptown      | 1700000.0000
+(2 rows)
+
+-- (k) Who are the customers that have a loan from an agency in the
+-- same city where they live?
+ customer_name
+---------------
+ Cook
+ Parker
+(2 rows)
+
+-- (l) Who are the customers that live in cities that have bank branches?
+ customer_name | customer_city 
+---------------+---------------
+ Adams         | Lisbon
+ Brown         | Oporto
+ Cook          | Lisbon
+ Davis         | Oporto
+ Johnson       | Cascais
+ Lopez         | Vila Real
+ Oliver        | Oporto
+ Parker        | Lisbon
+(8 rows)
+
+-- (m) Who are the customers that have an account and a loan?
+ customer_name 
+---------------
+ Cook
+ Brown
+ Iacocca
+(3 rows)
+
+-- (n) Who are the customers that live in cities that do NOT 
+-- have bank branches?
+ customer_name | customer_city  
+---------------+----------------
+ Evans         | Coimbra
+ Flores        | Braga
+ Gonzalez      | Faro
+ Iacocca       | Coimbra
+ King          | Aveiro
+ Martin        | Braga
+ Nguyen        | Castelo Branco
+(7 rows)
+
+-- (o) What is the sum of the balances in accounts in branches 
+-- in the city of Lisbon?
+    sum
+-----------
+ 2950.0000
+(1 row)

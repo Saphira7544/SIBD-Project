@@ -1,0 +1,357 @@
+----------------------------------------
+--1. Queries using IN and NOT IN
+----------------------------------------
+-- a) Which clients live IN cities that have bank branches?
+ customer_name 
+---------------
+ Adams
+ Brown
+ Cook
+ Davis
+ Johnson
+ Lopez
+ Oliver
+ Parker
+(8 rows)
+
+-- b) What are the names and addresses of clients who have a bank
+-- account but no loans?
+ customer_name | customer_street | customer_city 
+---------------+-----------------+---------------
+ Evans         | Forest Street   | Coimbra
+ Flores        | Station Street  | Braga
+ Johnson       | New Street      | Cascais
+ Oliver        | First Street    | Oporto
+(4 rows)
+
+-- c) Who are the clients who have a loan at branch in the same city
+-- where they live?
+ customer_name 
+---------------
+ Cook
+ Parker
+(2 rows)
+
+-- d) Which clients have at least one bank account and loan?
+ customer_name 
+---------------
+ Brown
+ Cook
+ Iacocca
+(3 rows)
+
+----------------------------------------
+-- 2. Simple aggregation queries
+----------------------------------------
+-- a) What is the total amount of account balances in branches of the
+-- city of Amadora?
+    sum    
+-----------
+ 1400.0000
+(1 row)
+
+-- b) What is the maximum balance for an Amadora account?
+   max    
+----------
+ 800.0000
+(1 row)
+
+-- c) How many clients live in the same city as an agency where they have an account?
+ count 
+-------
+     1
+(1 row)
+
+-- d) How many clients have at least a bank account no loan?
+ num_cli 
+---------
+       4
+(1 row)
+
+----------------------------------------
+--- 3. Queries involving GROUP BY
+----------------------------------------
+-- a) What is the maximum balance per city
+ branch_city |   max    
+-------------+----------
+ Cascais     | 750.0000
+ Amadora     | 800.0000
+ Vila Real   | 650.0000
+ Lisbon      | 900.0000
+(4 rows)
+
+-- b) What is the average balance per city?
+ branch_city |         avg          
+-------------+----------------------
+ Cascais     | 650.0000000000000000
+ Amadora     | 700.0000000000000000
+ Vila Real   | 650.0000000000000000
+ Lisbon      | 737.5000000000000000
+(4 rows)
+
+-- c) What is the number of accounts per branch?
+ branch_name | count 
+-------------+-------
+ University  |     1
+ Metro       |     1
+ Downtown    |     2
+ Round Hill  |     1
+ Central     |     2
+ Uptown      |     2
+(6 rows)
+
+-- d) What is the number of accounts on each city that has a branch?
+ branch_city | count 
+-------------+-------
+ Cascais     |     2
+ Amadora     |     2
+ Vila Real   |     1
+ Lisbon      |     4
+(4 rows)
+
+-- e) What is the total balance per customer?
+ customer_name |    sum    
+---------------+-----------
+ Johnson       | 1400.0000
+ Oliver        |  750.0000
+ Brown         | 1450.0000
+ Evans         |  550.0000
+ Flores        |  800.0000
+ Cook          | 1200.0000
+ Iacocca       |  650.0000
+(7 rows)
+
+-- f) Which clients have more than one loan?
+ customer_name 
+---------------
+ Brown
+ Iacocca
+(2 rows)
+
+-- g) List, alphabetically, the names of customers who have more than two bank accounts.
+ customer_name 
+---------------
+(0 rows)
+
+----------------------------------------
+-- 4. Nested/Correlated Queries
+----------------------------------------
+-- (a) Which branches have fewer recorded assets (branch assets) than
+-- liabilities (total amount of loans)?
+ branch_name 
+-------------
+(0 rows)
+
+-- (b) Which branches have fewer real assets (sum of all balance of all accounts)
+-- than liabilities (total amount of loans)?
+ branch_name 
+-------------
+ Downtown
+ Central
+ Uptown
+ Metro
+ Round Hill
+(5 rows)
+
+-- (c) What are the branch names AND the difference between
+-- their accounts total balance AND their loans total amount?
+  branch_name  | difference  
+---------------+-------------
+ Downtown      | -11650.0000
+ Central       |  -9700.0000
+ Uptown        |  -8400.0000
+ Metro         |  -4400.0000
+ Round Hill    |  -5200.0000
+ Ship Terminal |           0
+ Bolsa         |           0
+ University    |    650.0000
+ Wine Celar    |           0
+(9 rows)
+
+-- (d) For each customer what are their names, total in loans and total in balances?
+ customer_name | total_loans | total_accounts 
+---------------+-------------+----------------
+ Adams         |             |               
+ Brown         |  17000.0000 |      1450.0000
+ Cook          |   3000.0000 |      1200.0000
+ Davis         |   5000.0000 |               
+ Evans         |             |       550.0000
+ Flores        |             |       800.0000
+ Gonzalez      |   1000.0000 |               
+ Iacocca       |   8000.0000 |       650.0000
+ Johnson       |             |      1400.0000
+ King          |             |               
+ Lopez         |             |               
+ Martin        |             |               
+ Nguyen        |   4000.0000 |               
+ Oliver        |             |       750.0000
+ Parker        |   8000.0000 |               
+(15 rows)
+
+-- (e) Which are the customers that their total IN loans is higher than
+-- their total in balances?
+
+-- Ignoring customers with only accounts,
+-- only loans, or neither
+ customer_name 
+---------------
+ Brown
+ Cook
+ Iacocca
+(3 rows)
+
+-- Assuming customers with no loans have a loan amount
+-- of 0, and customers with no accounts have a balance of 0
+ customer_name 
+---------------
+ Brown
+ Cook
+ Davis
+ Gonzalez
+ Iacocca
+ Nguyen
+ Parker
+(7 rows)
+
+----------------------------------------
+-- 5. Queries to determine the distinctive element
+----------------------------------------
+-- a) What is the name of the customer that owes the most money to the bank (in its total loans)?
+ customer_name 
+---------------
+ Brown
+(1 row)
+
+-- b) Which branch has the most accounts?
+ branch_name 
+-------------
+ Central
+ Uptown
+ Downtown
+(3 rows)
+
+-- c) Which agency has the highest account balance average (among all agencies)?
+ branch_name 
+-------------
+ Uptown
+ Round Hill
+(2 rows)
+
+-- d) How many customers exist per city (in all its branches)?
+ branch_city | cust_count 
+-------------+------------
+ Amadora     |          3
+ Cascais     |          3
+ Lisbon      |          7
+ Vila Real   |          1
+(4 rows)
+
+-- e) Which city has the most customers (in all its branches)?
+ branch_city | count 
+-------------+-------
+ Lisbon      |     7
+(1 row)
+
+-- f) What is the name AND address of the customer who has the highest total balance?
+ customer_name | customer_city | customer_street 
+---------------+---------------+-----------------
+ Brown         | Oporto        | Main Street
+(1 row)
+
+----------------------------------------
+-- 6. Queries with UNIQUE and EXISTS
+----------------------------------------
+-- a) Which accounts have only one owner (one depositor)?
+ account_number 
+----------------
+ A-215
+ A-102
+ A-305
+ A-201
+ A-222
+ A-217
+ A-333
+ A-444
+(8 rows)
+
+-- b) Which cities have a branch?
+ branch_city 
+-------------
+ Amadora
+ Cascais
+ Vila Real
+ Oporto
+ Lisbon
+(5 rows)
+
+-- c) Which cities have a branch with more than 2 accounts?
+ branch_city 
+-------------
+ Cascais
+ Lisbon
+(2 rows)
+
+-- d) Which branches have an account with more than one owner?
+ branch_name 
+-------------
+ Downtown
+(1 row)
+
+----------------------------------------
+-- 7. Queries with OUTER JOIN
+----------------------------------------
+-- a) List the customer names and streets, along with their loans numbers,
+-- if they exist, of the customer that live in ‘Lisbon’
+ customer_name | customer_street | loan_number 
+---------------+-----------------+-------------
+ Cook          | Main Street     | L-15 
+ Parker        | Liberty Avenue  | L-20 
+ Adams         | Main Street     | 
+(3 rows)
+
+-- b) List all customer names AND cities alONg with their highest loan,
+-- and biggest account, if they exist
+ customer_name | customer_street | loan_number | account_number 
+---------------+-----------------+-------------+----------------
+ Adams         | Main Street     |             | 
+ Brown         | Main Street     | L-21        | A-444
+ Cook          | Main Street     | L-15        | A-102
+ Davis         | Church Street   | L-93        | 
+ Evans         | Forest Street   |             | A-222
+ Flores        | Station Street  |             | A-305
+ Gonzalez      | Sunny Street    | L-17        | 
+ Iacocca       | Spring Steet    | L-16        | A-217
+ Johnson       | New Street      |             | A-201
+ King          | Garden Street   |             | 
+ Lopez         | Grand Street    |             | 
+ Martin        | Royal Street    |             | 
+ Nguyen        | School Street   | L-14        | 
+ Oliver        | First Street    |             | A-333
+ Parker        | Liberty Avenue  | L-20        | 
+(15 rows)
+
+----------------------------------------
+-- 8. Queries that test for coverage (Division)
+----------------------------------------
+-- a) What are the names of clients who have accounts at all branches of the bank?
+ customer_name 
+---------------
+(0 rows)
+
+-- b) Who are the names of clients who have accounts at all branches
+-- in of Lisbon?
+ customer_name 
+---------------
+ Cook
+ Johnson
+(2 rows)
+
+-- c) What are the names of clients who have accounts at all branches in the same city where they live?
+ customer_name 
+---------------
+ Cook
+ Evans
+ Flores
+ Iacocca
+(4 rows)
+
